@@ -1,4 +1,4 @@
-// Dados dos ramais
+// Dados completos dos ramais
 const ramaisData = [
     { ramal: '6400', nome: '6400 - Telefonista', departamento: 'GABIN (Gabinete)' },
     { ramal: '6400', nome: '6400 - Telefonista', departamento: 'GABIN (Gabinete)' },
@@ -170,28 +170,22 @@ const ramaisData = [
     { ramal: '8420', nome: '8420 - Beto Fatinel', departamento: 'GABIN (Gabinete)' }
 ];
 
-// Variáveis globais
+// Sistema de filtros e ordenação
 let filteredData = [...ramaisData];
 let sortColumn = 'ramal';
 let sortDirection = 'asc';
 
-// Inicializar a tabela
 function initTable() {
     updateTable();
     document.getElementById('total-count').textContent = ramaisData.length;
     
-    // Adicionar event listeners para os filtros
     document.getElementById('search-ramal').addEventListener('input', filterTable);
     document.getElementById('search-nome').addEventListener('input', filterTable);
     document.getElementById('search-departamento').addEventListener('input', filterTable);
     
-    // Botão limpar filtros
     document.getElementById('clear-filters').addEventListener('click', clearFilters);
-    
-    // Botão resetar busca
     document.getElementById('reset-search').addEventListener('click', clearFilters);
     
-    // Adicionar event listeners para ordenação
     document.querySelectorAll('th[data-sort]').forEach(th => {
         th.addEventListener('click', () => {
             const column = th.getAttribute('data-sort');
@@ -202,7 +196,6 @@ function initTable() {
                 sortDirection = 'asc';
             }
             
-            // Atualizar indicadores visuais
             document.querySelectorAll('th').forEach(header => {
                 header.classList.remove('asc', 'desc');
             });
@@ -214,7 +207,6 @@ function initTable() {
     });
 }
 
-// Filtrar a tabela
 function filterTable() {
     const ramalFilter = document.getElementById('search-ramal').value.toLowerCase();
     const nomeFilter = document.getElementById('search-nome').value.toLowerCase();
@@ -232,7 +224,6 @@ function filterTable() {
     updateTable();
 }
 
-// Limpar todos os filtros
 function clearFilters() {
     document.getElementById('search-ramal').value = '';
     document.getElementById('search-nome').value = '';
@@ -243,13 +234,11 @@ function clearFilters() {
     updateTable();
 }
 
-// Ordenar a tabela
 function sortTable() {
     filteredData.sort((a, b) => {
         let aValue = a[sortColumn];
         let bValue = b[sortColumn];
         
-        // Para ordenação numérica na coluna de ramal
         if (sortColumn === 'ramal') {
             aValue = parseInt(aValue);
             bValue = parseInt(bValue);
@@ -261,7 +250,6 @@ function sortTable() {
     });
 }
 
-// Atualizar a tabela
 function updateTable() {
     const tableBody = document.getElementById('table-body');
     const noResults = document.getElementById('no-results');
@@ -283,4 +271,9 @@ function updateTable() {
                 <td>${item.nome}</td>
                 <td>${item.departamento}</td>
             `;
-            table
+            tableBody.appendChild(row);
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initTable);
