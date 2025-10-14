@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ramais VoIP - SEDES</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Lista de Ramais VoIP - SEDES</h1>
+            <p>Sistema de consulta de ramais telefônicos</p>
+        </header>
+        
+        <div class="filters">
+            <div class="filter-group">
+                <label for="search-ramal">Ramal</label>
+                <input type="text" id="search-ramal" placeholder="Digite o ramal...">
+            </div>
+            
+            <div class="filter-group">
+                <label for="search-nome">Nome</label>
+                <input type="text" id="search-nome" placeholder="Digite o nome...">
+            </div>
+            
+            <div class="filter-group">
+                <label for="search-departamento">Departamento/Divisão</label>
+                <input type="text" id="search-departamento" placeholder="Digite o departamento...">
+            </div>
+            
+            <button id="clear-filters" class="clear-btn">Limpar Filtros</button>
+        </div>
+        
+        <div class="results-info">
+            Mostrando <span id="results-count">0</span> de <span id="total-count">0</span> registros
+        </div>
+        
+        <div class="table-container">
+            <table id="ramais-table">
+                <thead>
+                    <tr>
+                        <th data-sort="ramal">Ramal</th>
+                        <th data-sort="nome">Nome</th>
+                        <th data-sort="departamento">Departamento/Divisão</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Os dados serão inseridos aqui via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div id="no-results" class="no-results" style="display: none;">
+            <p>Nenhum resultado encontrado com os filtros aplicados.</p>
+            <button id="reset-search" class="reset-btn">Limpar busca</button>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 SEDES - Sistema de Ramais VoIP</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
