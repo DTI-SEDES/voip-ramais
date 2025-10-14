@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramais VoIP - DTI SEDES EM PRODUÇÃO</title>
+    <title>Ramais VoIP - Governo do RS</title>
     <style>
         * {
             box-sizing: border-box;
@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -32,22 +32,28 @@
         header {
             background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
             color: white;
-            padding: 30px;
-            text-align: center;
+            padding: 25px;
             border-bottom: 4px solid #ffd700;
         }
 
         .header-content {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 20px;
+            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .brasao-titulo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex: 1;
         }
 
         .brasao {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: white;
             border-radius: 50%;
             display: flex;
@@ -56,31 +62,66 @@
             border: 3px solid #ffd700;
             font-weight: bold;
             color: #0056b3;
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
             line-height: 1.2;
+            flex-shrink: 0;
         }
 
         .titulo h1 {
-            margin: 0 0 10px 0;
-            font-size: 2.2em;
+            margin: 0 0 5px 0;
+            font-size: 2em;
             font-weight: 700;
         }
 
         .titulo p {
             margin: 0;
             opacity: 0.9;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
-        /* Filtros */
-        .filters {
+        .info-geral {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .total-ramais {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        /* Filtros - Layout Melhorado */
+        .filters-section {
+            padding: 0;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .filters-header {
+            background: linear-gradient(135deg, #0056b3, #004494);
+            color: white;
+            padding: 15px 25px;
+            font-weight: 600;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters-header::before {
+            content: '🔍';
+            font-size: 1.2em;
+        }
+
+        .filters-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr auto;
+            grid-template-columns: 120px 1fr 1fr 100px;
             gap: 15px;
             padding: 25px;
-            background: #f8f9fa;
-            border-bottom: 1px solid #e9ecef;
+            align-items: end;
         }
 
         .filter-group {
@@ -88,76 +129,115 @@
             flex-direction: column;
         }
 
+        .filter-group.compact {
+            grid-column: span 1;
+        }
+
+        .filter-group.large {
+            grid-column: span 1;
+        }
+
         label {
             margin-bottom: 8px;
             font-weight: 600;
             color: #0056b3;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         input {
-            padding: 12px;
+            padding: 12px 15px;
             border: 2px solid #dee2e6;
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.3s ease;
+            background: white;
         }
 
         input:focus {
             outline: none;
             border-color: #0056b3;
             box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+            transform: translateY(-1px);
+        }
+
+        input::placeholder {
+            color: #6c757d;
+            font-weight: 400;
         }
 
         .clear-btn {
-            background: #dc3545;
+            background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
             border: none;
             padding: 12px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            transition: background 0.3s ease;
-            align-self: flex-end;
+            transition: all 0.3s ease;
+            height: fit-content;
         }
 
         .clear-btn:hover {
-            background: #c82333;
+            background: linear-gradient(135deg, #c82333, #a71e2a);
+            transform: translateY(-1px);
         }
 
-        /* Informações */
+        /* Informações de Resultados */
         .results-info {
-            padding: 15px 25px;
+            padding: 12px 25px;
             background: #e7f3ff;
             color: #0056b3;
             font-weight: 600;
             border-bottom: 1px solid #cce0ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Tabela */
+        .results-count {
+            font-size: 0.95em;
+        }
+
+        .sort-info {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        /* Tabela - Layout Otimizado */
         .table-container {
             overflow-x: auto;
+            max-height: 60vh;
+            overflow-y: auto;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 600px;
+            min-width: 800px;
         }
 
         th {
-            background: #0056b3;
+            background: linear-gradient(135deg, #0056b3, #004494);
             color: white;
-            padding: 15px;
+            padding: 16px 20px;
             text-align: left;
             font-weight: 600;
             cursor: pointer;
             user-select: none;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        th:last-child {
+            border-right: none;
         }
 
         th:hover {
-            background: #004494;
+            background: linear-gradient(135deg, #004494, #003d82);
         }
 
         th::after {
@@ -165,44 +245,82 @@
             position: absolute;
             right: 15px;
             opacity: 0.7;
+            font-size: 0.9em;
         }
 
         th.asc::after {
             content: '↑';
+            color: #ffd700;
         }
 
         th.desc::after {
             content: '↓';
+            color: #ffd700;
         }
 
         td {
-            padding: 12px 15px;
+            padding: 14px 20px;
             border-bottom: 1px solid #f8f9fa;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .ramal-cell {
+            font-weight: 700;
+            color: #0056b3;
+            font-size: 1.1em;
+        }
+
+        .sigla-cell {
+            font-weight: 600;
+            color: #2c3e50;
+            background: #f8f9fa;
+        }
+
+        .departamento-cell {
+            color: #495057;
+            line-height: 1.4;
         }
 
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: #f8fbff;
         }
 
         tr:hover {
-            background-color: #e3f2fd;
+            background: linear-gradient(135deg, #e7f3ff, #d4e7ff);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
         }
 
         /* Sem resultados */
         .no-results {
             text-align: center;
-            padding: 40px;
+            padding: 60px 20px;
             color: #6c757d;
+            background: #f8f9fa;
+        }
+
+        .no-results p {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #0056b3;
+            font-weight: 600;
         }
 
         .reset-btn {
-            background: #0056b3;
+            background: linear-gradient(135deg, #0056b3, #004494);
             color: white;
             border: none;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #004494, #003d82);
+            transform: translateY(-1px);
         }
 
         /* Rodapé */
@@ -214,29 +332,92 @@
             border-top: 4px solid #ffd700;
         }
 
+        footer p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+
         /* Responsivo */
+        @media (max-width: 1024px) {
+            .filters-grid {
+                grid-template-columns: 100px 1fr 1fr 90px;
+                gap: 12px;
+                padding: 20px;
+            }
+            
+            .brasao {
+                width: 60px;
+                height: 60px;
+                font-size: 10px;
+            }
+            
+            .titulo h1 {
+                font-size: 1.7em;
+            }
+        }
+
         @media (max-width: 768px) {
-            .filters {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .clear-btn {
-                align-self: stretch;
-            }
-            
             .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .brasao-titulo {
                 flex-direction: column;
                 text-align: center;
             }
             
+            .info-geral {
+                text-align: center;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .clear-btn {
+                width: 100%;
+            }
+            
+            th, td {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+            
             .titulo h1 {
-                font-size: 1.8em;
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            .filters-grid {
+                padding: 15px;
             }
             
             th, td {
                 padding: 10px 12px;
-                font-size: 14px;
+                font-size: 13px;
+            }
+            
+            .brasao {
+                width: 50px;
+                height: 50px;
+                font-size: 9px;
             }
         }
     </style>
@@ -245,46 +426,61 @@
     <div class="container">
         <header>
             <div class="header-content">
-                <div class="brasao">
-                    DTI SEDES<br>DEP ADM
+                <div class="brasao-titulo">
+                    <div class="brasao">
+                        GOVERNO<br>DO RS
+                    </div>
+                    <div class="titulo">
+                        <h1>Ramais VoIP - SEDES</h1>
+                        <p>Sistema Oficial de Consulta de Ramais</p>
+                    </div>
                 </div>
-                <div class="titulo">
-                    <h1>Ramais VoIP - SEDES</h1>
-                    <p>EM PRODUÇÃO - Sistema de Consulta de Ramais</p>
+                <div class="info-geral">
+                    <div class="total-ramais">Total: <span id="total-count">0</span> ramais</div>
                 </div>
             </div>
         </header>
         
-        <div class="filters">
-            <div class="filter-group">
-                <label for="search-ramal">Ramal</label>
-                <input type="text" id="search-ramal" placeholder="Digite o ramal...">
+        <div class="filters-section">
+            <div class="filters-header">
+                Pesquisa de Ramais
             </div>
-            
-            <div class="filter-group">
-                <label for="search-nome">Nome</label>
-                <input type="text" id="search-nome" placeholder="Digite o nome...">
+            <div class="filters-grid">
+                <div class="filter-group compact">
+                    <label for="search-ramal">RAMAL</label>
+                    <input type="text" id="search-ramal" placeholder="Número do ramal">
+                </div>
+                
+                <div class="filter-group large">
+                    <label for="search-sigla">SIGLA/LOCAL</label>
+                    <input type="text" id="search-sigla" placeholder="Sigla ou nome do local">
+                </div>
+                
+                <div class="filter-group large">
+                    <label for="search-departamento">DEPARTAMENTO/DIVISÃO</label>
+                    <input type="text" id="search-departamento" placeholder="Departamento ou divisão">
+                </div>
+                
+                <button id="clear-filters" class="clear-btn">Limpar</button>
             </div>
-            
-            <div class="filter-group">
-                <label for="search-departamento">Departamento/Divisão</label>
-                <input type="text" id="search-departamento" placeholder="Digite o departamento...">
-            </div>
-            
-            <button id="clear-filters" class="clear-btn">Limpar Filtros</button>
         </div>
         
         <div class="results-info">
-            Mostrando <span id="results-count">0</span> de <span id="total-count">0</span> registros
+            <div class="results-count">
+                Mostrando <span id="results-count">0</span> registros
+            </div>
+            <div class="sort-info">
+                Clique nos cabeçalhos para ordenar
+            </div>
         </div>
         
         <div class="table-container">
             <table id="ramais-table">
                 <thead>
                     <tr>
-                        <th data-sort="ramal">Ramal</th>
-                        <th data-sort="nome">Nome</th>
-                        <th data-sort="departamento">Departamento/Divisão</th>
+                        <th data-sort="ramal">RAMAL</th>
+                        <th data-sort="sigla">SIGLA/LOCAL</th>
+                        <th data-sort="departamento">DEPARTAMENTO/DIVISÃO</th>
                     </tr>
                 </thead>
                 <tbody id="table-body">
@@ -294,157 +490,156 @@
         </div>
         
         <div id="no-results" class="no-results" style="display: none;">
-            <p>Nenhum resultado encontrado com os filtros aplicados.</p>
-            <button id="reset-search" class="reset-btn">Limpar busca</button>
+            <p>Nenhum ramal encontrado com os critérios de pesquisa</p>
+            <button id="reset-search" class="reset-btn">Limpar pesquisa</button>
         </div>
         
         <footer>
-            <p>&copy; 2025 Divisão de Tecnologia da Informação - SEDES</p>
+            <p>&copy; 2024 Governo do Estado do Rio Grande do Sul - Secretaria de Desenvolvimento Social</p>
         </footer>
     </div>
 
     <script>
-        // Dados atualizados dos ramais (sem duplicados)
+        // Dados atualizados conforme nova planilha
         const ramaisData = [
-            { ramal: '6555', nome: '6555 - IDOSO', departamento: 'Unidade Especial de Atenção ao Idoso' },
-            { ramal: '6404', nome: '6404 - Sec Adj', departamento: 'Gabinete Secretário Adjunto' },
-            { ramal: '6408', nome: '6408 - Sec Adj', departamento: 'Gabinete Secretário Adjunto' },
-            { ramal: '6400', nome: '6400 - Telefonista', departamento: 'TELEFONISTA' },
-            { ramal: '6411', nome: '6411 - Gabinete', departamento: 'GABINETE SECRETÁRIO' },
-            { ramal: '6420', nome: '6420 - Gabinete', departamento: 'GABINETE SECRETÁRIO' },
-            { ramal: '6430', nome: '6430 - Gabinete', departamento: 'GABINETE SECRETÁRIO' },
-            { ramal: '6432', nome: '6432 - Gabinete', departamento: 'GABINETE SECRETÁRIO' },
-            { ramal: '6433', nome: '6433 - Gabinete', departamento: 'GABINETE SECRETÁRIO' },
-            { ramal: '6435', nome: '6435 - Chefe de Gabinete', departamento: 'CHEFE GABINETE' },
-            { ramal: '6402', nome: '6402 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6403', nome: '6403 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6405', nome: '6405 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6406', nome: '6406 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6407', nome: '6407 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6409', nome: '6409 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6426', nome: '6426 - DSA', departamento: 'Departamento Segurança Alimentar' },
-            { ramal: '6423', nome: '6423 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6475', nome: '6475 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6487', nome: '6487 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6551', nome: '6551 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6552', nome: '6552 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6553', nome: '6553 - DPJ', departamento: 'Departamento de Politicas para Juventude' },
-            { ramal: '6412', nome: '6412 - Protocolo', departamento: 'DPA - Protocolo' },
-            { ramal: '6413', nome: '6413 - Protocolo', departamento: 'DPA - Protocolo' },
-            { ramal: '6466', nome: '6466 - Protocolo', departamento: 'DPA - Protocolo' },
-            { ramal: '6491', nome: '6491 - Protocolo', departamento: 'DPA - Protocolo' },
-            { ramal: '6572', nome: '6572 - Protocolo', departamento: 'DPA - Protocolo' },
-            { ramal: '6414', nome: '6414 - DIPPE', departamento: 'DIPPE - DPP' },
-            { ramal: '6418', nome: '6418 - DIPPE', departamento: 'DIPPE - DISP' },
-            { ramal: '6428', nome: '6428 -DIPPE', departamento: 'DIPPE - DISP' },
-            { ramal: '6460', nome: '6460 - DIPPE', departamento: 'DIPPE - DISP' },
-            { ramal: '6500', nome: '6500 - DIPPE - DIREG (Registro)', departamento: 'DIPPE - DIREG (Registro)' },
-            { ramal: '6501', nome: '6501 - DIPPE - DIREG (Registro)', departamento: 'DIPPE - DIREG (Registro)' },
-            { ramal: '6502', nome: '6502 - DIPPE - DIREG (Registro)', departamento: 'DIPPE - DIREG (Registro)' },
-            { ramal: '6503', nome: '6503 - DIPPE - DIREG (Registro)', departamento: 'DIPPE - DIREG (Registro)' },
-            { ramal: '6441', nome: '6441 - DIPPE -PRO SOCIAL', departamento: 'DIPPE - DCPS (Pro Social)' },
-            { ramal: '6442', nome: '6442 - DIPPE -PRO SOCIAL', departamento: 'DIPPE - DCPS (Pro Social)' },
-            { ramal: '6454', nome: '6454 - DIPPE -PRO SOCIAL', departamento: 'DIPPE - DCPS (Pro Social)' },
-            { ramal: '6969', nome: '6969 - FUCK TESTL', departamento: 'MYFUCK - FUCKFUCK (LambBools)' },
-            { ramal: '6471', nome: '6471 - DIPPE -PRO SOCIAL', departamento: 'DIPPE - DCPS (Pro Social)' },
-            { ramal: '6529', nome: '6529 - DIPPE -PRO SOCIAL', departamento: 'DIPPE - DCPS (Pro Social)' },
-            { ramal: '6410', nome: '6410 - DIPPE', departamento: 'DIPPE' },
-            { ramal: '6465', nome: '6465 - DIPPE', departamento: 'DIPPE' },
-            { ramal: '6508', nome: '6508 - DGS - Vigilância', departamento: 'DGS - Vigilância em Saúde' },
-            { ramal: '6519', nome: '6519 - DGS - Vigilancia', departamento: 'DGS - Vigilância em Saúde' },
-            { ramal: '6526', nome: '6526 - DGS - Vigilância', departamento: 'DGS - Vigilância em Saúde' },
-            { ramal: '6472', nome: '6472 - DGS - Regulação SUAS', departamento: 'DGS - Regulação SUAS' },
-            { ramal: '6476', nome: '6476 - DGS - Regulação SUAS', departamento: 'DGS - Regulação SUAS' },
-            { ramal: '6489', nome: '6489 - DGS - Regulação SUAS', departamento: 'DGS - Regulação SUAS' },
-            { ramal: '6518', nome: '6518 - DGS - Direção do Trabalho', departamento: 'DGS - Gestão do Trabalho' },
-            { ramal: '6457', nome: '6457 - DGS - Gestão de Beneficios', departamento: 'DGS - Gestão de Benefícios' },
-            { ramal: '6455', nome: '6455 - FEAS', departamento: 'DGS - FEAS' },
-            { ramal: '6470', nome: '6470 - FEAS', departamento: 'DGS - FEAS' },
-            { ramal: '6550', nome: '6550 - FEAS', departamento: 'DGS - FEAS' },
-            { ramal: '6554', nome: '6554 - FEAS', departamento: 'DGS - FEAS' },
-            { ramal: '6438', nome: '6438 - FEAS', departamento: 'DGS - FEAS' },
-            { ramal: '6440', nome: '6440 - DG', departamento: 'Direção Geral' },
-            { ramal: '6444', nome: '6444 - DG', departamento: 'Direção Geral' },
-            { ramal: '6474', nome: '6474 - DG', departamento: 'Direção Geral' },
-            { ramal: '6556', nome: '6556 - DG', departamento: 'Direção Geral' },
-            { ramal: '6446', nome: '6446 - DG', departamento: 'Direção Geral' },
-            { ramal: '6458', nome: '6458 - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6496', nome: '6496 - PSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6512', nome: '6512 - PSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6513', nome: '6513 - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6514', nome: '6514 - PSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6515', nome: '6515 - PSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6517', nome: '6517 - PSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6538', nome: '6538 - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6549', nome: '6549 - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
-            { ramal: '6456', nome: '6456 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6537', nome: '6537 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6539', nome: '6539 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6547', nome: '6547 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6548', nome: '6548 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6557', nome: '6557 - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
-            { ramal: '6452', nome: '6452 - DAS Direcao', departamento: 'DAS - DIREÇÃO' },
-            { ramal: '6540', nome: '6540 - DAS Direção', departamento: 'DAS - DIREÇÃO' },
-            { ramal: '6453', nome: '6453 - DGS', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6490', nome: '6490 - DAS - Gestão', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6499', nome: '6499 - DGS', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6506', nome: '6506 - DAS - Gestão', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6544', nome: '6544 - DGS', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6429', nome: '6429 - DGS', departamento: 'DAS - DGS (Gestão do SUAS)' },
-            { ramal: '6439', nome: '6439 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6445', nome: '6445 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6483', nome: '6483 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6497', nome: '6497 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6498', nome: '6498 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6535', nome: '6535 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6447', nome: '6447 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6419', nome: '6419 - CADUNICO', departamento: 'DAS - DGCAD (CADUNICO)' },
-            { ramal: '6462', nome: '6462 - DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
-            { ramal: '6463', nome: '6463 - DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
-            { ramal: '6481', nome: '6481 - DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
-            { ramal: '6482', nome: '6482 - DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
-            { ramal: '6484', nome: '6484 - DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
-            { ramal: '6461', nome: '6461 - DTI', departamento: 'DA - DTI' },
-            { ramal: '6464', nome: '6464 - DPA', departamento: 'DA - DPA' },
-            { ramal: '6467', nome: '6467 - DPA', departamento: 'DA - DPA' },
-            { ramal: '6530', nome: '6530 - DPA', departamento: 'DA - DPA' },
-            { ramal: '6569', nome: '6569 - DPA', departamento: 'DA - DPA' },
-            { ramal: '6451', nome: '6451 - DPA', departamento: 'DA - DPA' },
-            { ramal: '6401', nome: '6401 - DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
-            { ramal: '6425', nome: '6425 - DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
-            { ramal: '6468', nome: '6468 - DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
-            { ramal: '6424', nome: '6424 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6443', nome: '6443 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6448', nome: '6448 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6473', nome: '6473 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6478', nome: '6478 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6480', nome: '6480 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6504', nome: '6504 - DPCT', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6545', nome: '6545 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6575', nome: '6575 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6434', nome: '6434 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6492', nome: '6492 - DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
-            { ramal: '6437', nome: '6437 - DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
-            { ramal: '6494', nome: '6494 - DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
-            { ramal: '6436', nome: '6436 - DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
-            { ramal: '6485', nome: '6485 - DA', departamento: 'DA - Gabinete' },
-            { ramal: '6486', nome: '6486 - DA', departamento: 'DA - Gabinete' },
-            { ramal: '8418', nome: '8418 - COPA', departamento: 'COPA - 8º andar' },
-            { ramal: '6449', nome: '6449 - CEI', departamento: 'Conselho do Idoso' },
-            { ramal: '6450', nome: '6450 - CEI', departamento: 'Conselho do Idoso' },
-            { ramal: '6560', nome: '6560 - CEI', departamento: 'Conselho do Idoso' },
-            { ramal: '6427', nome: '6427 - CEAS', departamento: 'Conselho de Assistência Social' },
-            { ramal: '6495', nome: '6495 - CEAS', departamento: 'Conselho de Assistência Social' },
-            { ramal: '6522', nome: '6522 - CEAS', departamento: 'Conselho de Assistência Social' },
-            { ramal: '6536', nome: '6536 - CEAS', departamento: 'Conselho de Assistência Social' },
-            { ramal: '6416', nome: '6416 - ASSTEC', departamento: 'ASSTEC' },
-            { ramal: '6493', nome: '6493 - ASSTEC', departamento: 'ASSTEC' },
-            { ramal: '6528', nome: '6528 - ASSTEC', departamento: 'ASSTEC' },
-            { ramal: '6543', nome: '6543 - ASSTEC', departamento: 'ASSTEC' },
-            { ramal: '6421', nome: '6421 - ASSJUR', departamento: 'ASSJUR (Assessoria Jurídica)' },
-            { ramal: '6422', nome: '6422- ASSJUR', departamento: 'ASSJUR (Assessoria Jurídica)' },
-            { ramal: '6477', nome: '6477 - ASSJUR', departamento: 'ASSJUR (Assessoria Jurídica)' },
-            { ramal: '6415', nome: '6415 - ASSCOM', departamento: 'ASSCOM (Assessoria de Comunicação)' }
+            { ramal: '6555', sigla: 'UEAPI', departamento: 'Unidade Especial de Atenção ao Idoso' },
+            { ramal: '6404', sigla: 'SEC ADJ', departamento: 'Gabinete Secretário Adjunto' },
+            { ramal: '6408', sigla: 'SEC ADJ', departamento: 'Gabinete Secretário Adjunto' },
+            { ramal: '6400', sigla: 'Recepção', departamento: 'Recepção / Telefonista' },
+            { ramal: '6411', sigla: 'Gabinete', departamento: 'Gabinete Secretário' },
+            { ramal: '6420', sigla: 'Gabinete', departamento: 'Gabinete Secretário' },
+            { ramal: '6430', sigla: 'Gabinete', departamento: 'Gabinete Secretário' },
+            { ramal: '6432', sigla: 'Gabinete', departamento: 'Gabinete Secretário' },
+            { ramal: '6433', sigla: 'Gabinete', departamento: 'Gabinete Secretário' },
+            { ramal: '6435', sigla: 'Chefe de Gabinete', departamento: 'Chefia de Gabinete' },
+            { ramal: '6402', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6403', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6405', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6406', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6407', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6409', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6426', sigla: 'DSA', departamento: 'Departamento Segurança Alimentar' },
+            { ramal: '6423', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6475', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6487', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6551', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6552', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6553', sigla: 'DPJ', departamento: 'Departamento de Politicas para Juventude' },
+            { ramal: '6412', sigla: 'Protocolo', departamento: 'DA - DPA - Protocolo' },
+            { ramal: '6413', sigla: 'Protocolo', departamento: 'DA - DPA - Protocolo' },
+            { ramal: '6466', sigla: 'Protocolo', departamento: 'DA - DPA - Protocolo' },
+            { ramal: '6491', sigla: 'Protocolo', departamento: 'DA - DPA - Protocolo' },
+            { ramal: '6572', sigla: 'Protocolo', departamento: 'DA - DPA - Protocolo' },
+            { ramal: '6414', sigla: 'DIPPE', departamento: 'DIPPE - DPP' },
+            { ramal: '6418', sigla: 'DIPPE', departamento: 'DIPPE - DISP' },
+            { ramal: '6428', sigla: 'DIPPE', departamento: 'DIPPE - DISP' },
+            { ramal: '6460', sigla: 'DIPPE', departamento: 'DIPPE - DISP' },
+            { ramal: '6500', sigla: 'DIPPE - REG', departamento: 'DIPPE - Divisão de Registro' },
+            { ramal: '6501', sigla: 'DIPPE - REG', departamento: 'DIPPE - Divisão de Registro' },
+            { ramal: '6502', sigla: 'DIPPE - REG', departamento: 'DIPPE - Divisão de Registro' },
+            { ramal: '6503', sigla: 'DIPPE - REG', departamento: 'DIPPE - Divisão de Registro' },
+            { ramal: '6441', sigla: 'DIPPE - PROCOSCIAL', departamento: 'DIPPE - Divisão do Pró Social' },
+            { ramal: '6442', sigla: 'DIPPE - PROCOSCIAL', departamento: 'DIPPE - Divisão do Pró Social' },
+            { ramal: '6454', sigla: 'DIPPE - PROCOSCIAL', departamento: 'DIPPE - Divisão do Pró Social' },
+            { ramal: '6471', sigla: 'DIPPE - PROCOSCIAL', departamento: 'DIPPE - Divisão do Pró Social' },
+            { ramal: '6529', sigla: 'DIPPE - PROCOSCIAL', departamento: 'DIPPE - Divisão do Pró Social' },
+            { ramal: '6410', sigla: 'DIPPE', departamento: 'DIPPE' },
+            { ramal: '6465', sigla: 'DIPPE', departamento: 'DIPPE' },
+            { ramal: '6508', sigla: 'DAS - DGS', departamento: 'DGS - Vigilância em Saúde' },
+            { ramal: '6519', sigla: 'DAS - DGS', departamento: 'DGS - Vigilância em Saúde' },
+            { ramal: '6526', sigla: 'DAS - DGS', departamento: 'DGS - Vigilância em Saúde' },
+            { ramal: '6472', sigla: 'DAS - DGS', departamento: 'DGS - Regulação SUAS' },
+            { ramal: '6476', sigla: 'DAS - DGS', departamento: 'DGS - Regulação SUAS' },
+            { ramal: '6489', sigla: 'DAS - DGS', departamento: 'DGS - Regulação SUAS' },
+            { ramal: '6518', sigla: 'DAS - DGS', departamento: 'DGS - Gestão do Trabalho' },
+            { ramal: '6457', sigla: 'DAS - DGS', departamento: 'DGS - Gestão de Benefícios' },
+            { ramal: '6455', sigla: 'DAS -FEAS', departamento: 'DGS - Fundo Estadual de Assistência Social' },
+            { ramal: '6470', sigla: 'DAS -FEAS', departamento: 'DGS - Fundo Estadual de Assistência Social' },
+            { ramal: '6550', sigla: 'DAS -FEAS', departamento: 'DGS - Fundo Estadual de Assistência Social' },
+            { ramal: '6554', sigla: 'DAS -FEAS', departamento: 'DGS - Fundo Estadual de Assistência Social' },
+            { ramal: '6438', sigla: 'DAS -FEAS', departamento: 'DGS - Fundo Estadual de Assistência Social' },
+            { ramal: '6440', sigla: 'DIRGE', departamento: 'Direção Geral' },
+            { ramal: '6444', sigla: 'DIRGE', departamento: 'Direção Geral' },
+            { ramal: '6474', sigla: 'DIRGE', departamento: 'Direção Geral' },
+            { ramal: '6556', sigla: 'DIRGE', departamento: 'Direção Geral' },
+            { ramal: '6446', sigla: 'DIRGE', departamento: 'Direção Geral' },
+            { ramal: '6458', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6496', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6512', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6513', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6514', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6515', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6517', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6538', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6549', sigla: 'DAS - DPSE', departamento: 'DAS - DPSE (Divisão de Proteção Social Especial)' },
+            { ramal: '6456', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6537', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6539', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6547', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6548', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6557', sigla: 'DAS - DPSB', departamento: 'DAS - DPSB (Divisão de Proteção Social Básica)' },
+            { ramal: '6452', sigla: 'DAS Gabinete', departamento: 'DAS - Gabinete Direção' },
+            { ramal: '6540', sigla: 'DAS Gabinete', departamento: 'DAS - Gabinete Direção' },
+            { ramal: '6453', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6490', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6499', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6506', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6544', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6429', sigla: 'DAS -DGS', departamento: 'DAS - Divisão de Gestão do SUAS' },
+            { ramal: '6439', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6445', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6483', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6497', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6498', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6535', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6447', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6419', sigla: 'CADUNICO', departamento: 'DAS - Divisão de Gestão Cadastro Único' },
+            { ramal: '6462', sigla: 'DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
+            { ramal: '6463', sigla: 'DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
+            { ramal: '6481', sigla: 'DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
+            { ramal: '6482', sigla: 'DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
+            { ramal: '6484', sigla: 'DAPI', departamento: 'Departamento de Atenção a Primeira Infância' },
+            { ramal: '6461', sigla: 'DTI - Geral', departamento: 'DA - Divisão de Tecnologia da Informação' },
+            { ramal: '6464', sigla: 'DPA', departamento: 'DA - Divisão de Patrimônio e Apoio' },
+            { ramal: '6467', sigla: 'DPA', departamento: 'DA - Divisão de Patrimônio e Apoio' },
+            { ramal: '6530', sigla: 'DPA', departamento: 'DA - Divisão de Patrimônio e Apoio' },
+            { ramal: '6569', sigla: 'DPA', departamento: 'DA - Divisão de Patrimônio e Apoio' },
+            { ramal: '6451', sigla: 'DPA', departamento: 'DA - Divisão de Patrimônio e Apoio' },
+            { ramal: '6401', sigla: 'DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
+            { ramal: '6425', sigla: 'DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
+            { ramal: '6468', sigla: 'DOF', departamento: 'DA - Divisão de Orçamento e Finanças' },
+            { ramal: '6424', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6443', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6448', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6473', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6478', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6480', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6504', sigla: 'DICON - DPCT', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6545', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6575', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6434', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6492', sigla: 'DICON', departamento: 'DA - Div. Contratos, Convenios e Prest. Contas' },
+            { ramal: '6437', sigla: 'DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
+            { ramal: '6494', sigla: 'DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
+            { ramal: '6436', sigla: 'DGP', departamento: 'DA - Divisão de Gestão de Pessoas' },
+            { ramal: '6485', sigla: 'DA - GABINETE', departamento: 'DA - Gabinete' },
+            { ramal: '6486', sigla: 'DA - GABINETE', departamento: 'DA - Gabinete' },
+            { ramal: '8418', sigla: 'COPA Gabinete', departamento: 'COPA - 8º andar' },
+            { ramal: '6449', sigla: 'CEI', departamento: 'Conselho do Idoso' },
+            { ramal: '6450', sigla: 'CEI', departamento: 'Conselho do Idoso' },
+            { ramal: '6560', sigla: 'CEI', departamento: 'Conselho do Idoso' },
+            { ramal: '6427', sigla: 'CEAS', departamento: 'Conselho de Assistência Social' },
+            { ramal: '6495', sigla: 'CEAS', departamento: 'Conselho de Assistência Social' },
+            { ramal: '6522', sigla: 'CEAS', departamento: 'Conselho de Assistência Social' },
+            { ramal: '6536', sigla: 'CEAS', departamento: 'Conselho de Assistência Social' },
+            { ramal: '6416', sigla: 'ASSTEC', departamento: 'Assessoria Técnica' },
+            { ramal: '6493', sigla: 'ASSTEC', departamento: 'Assessoria Técnica' },
+            { ramal: '6528', sigla: 'ASSTEC', departamento: 'Assessoria Técnica' },
+            { ramal: '6543', sigla: 'ASSTEC', departamento: 'Assessoria Técnica' },
+            { ramal: '6421', sigla: 'ASSJUR', departamento: 'Setorial Procuradoria Geral do Estado' },
+            { ramal: '6422', sigla: 'ASSJUR', departamento: 'Setorial Procuradoria Geral do Estado' },
+            { ramal: '6477', sigla: 'ASSJUR', departamento: 'Setorial Procuradoria Geral do Estado' },
+            { ramal: '6415', sigla: 'ASSCOM', departamento: 'Assessoria de Comunicação SEDES' }
         ];
 
         // Sistema de filtros
@@ -457,7 +652,7 @@
             document.getElementById('total-count').textContent = ramaisData.length;
             
             document.getElementById('search-ramal').addEventListener('input', filterTable);
-            document.getElementById('search-nome').addEventListener('input', filterTable);
+            document.getElementById('search-sigla').addEventListener('input', filterTable);
             document.getElementById('search-departamento').addEventListener('input', filterTable);
             
             document.getElementById('clear-filters').addEventListener('click', clearFilters);
@@ -486,74 +681,5 @@
 
         function filterTable() {
             const ramalFilter = document.getElementById('search-ramal').value.toLowerCase();
-            const nomeFilter = document.getElementById('search-nome').value.toLowerCase();
-            const departamentoFilter = document.getElementById('search-departamento').value.toLowerCase();
-            
-            filteredData = ramaisData.filter(item => {
-                return (
-                    item.ramal.toLowerCase().includes(ramalFilter) &&
-                    item.nome.toLowerCase().includes(nomeFilter) &&
-                    item.departamento.toLowerCase().includes(departamentoFilter)
-                );
-            });
-            
-            sortTable();
-            updateTable();
-        }
-
-        function clearFilters() {
-            document.getElementById('search-ramal').value = '';
-            document.getElementById('search-nome').value = '';
-            document.getElementById('search-departamento').value = '';
-            
-            filteredData = [...ramaisData];
-            sortTable();
-            updateTable();
-        }
-
-        function sortTable() {
-            filteredData.sort((a, b) => {
-                let aValue = a[sortColumn];
-                let bValue = b[sortColumn];
-                
-                if (sortColumn === 'ramal') {
-                    aValue = parseInt(aValue);
-                    bValue = parseInt(bValue);
-                }
-                
-                if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
-                if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
-                return 0;
-            });
-        }
-
-        function updateTable() {
-            const tableBody = document.getElementById('table-body');
-            const noResults = document.getElementById('no-results');
-            const resultsCount = document.getElementById('results-count');
-            
-            tableBody.innerHTML = '';
-            
-            if (filteredData.length === 0) {
-                noResults.style.display = 'block';
-                resultsCount.textContent = '0';
-            } else {
-                noResults.style.display = 'none';
-                resultsCount.textContent = filteredData.length;
-                
-                filteredData.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.ramal}</td>
-                        <td>${item.nome}</td>
-                        <td>${item.departamento}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', initTable);
-    </script>
-</body>
-</html>
+            const siglaFilter = document.getElementById('search-sigla').value.toLowerCase();
+            const departamentoFilter = document.getElementById('search-dep
