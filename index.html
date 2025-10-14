@@ -519,6 +519,23 @@
         ];
 
         // SISTEMA DE FILTROS
+        <div class="department-groups">
+    <div class="filter-group">
+        <label for="department-group">GRUPO DE DEPARTAMENTOS</label>
+        <select id="department-group">
+            <option value="">Todos os departamentos</option>
+            <option value="GABINETE">Gabinete e Secretaria</option>
+            <option value="DSA">Segurança Alimentar (DSA)</option>
+            <option value="DPJ">Políticas para Juventude (DPJ)</option>
+            <option value="DIPPE">DIPPE e Divisões</option>
+            <option value="DGS">Gestão Social (DGS)</option>
+            <option value="DAS">Desenvolvimento Social (DAS)</option>
+            <option value="DA">Administrativo (DA)</option>
+            <option value="CONSELHO">Conselhos</option>
+            <option value="ASSESSORIA">Assessorias</option>
+        </select>
+    </div>
+</div>
         let filteredData = [...ramaisData];
         let sortColumn = 'ramal';
         let sortDirection = 'asc';
