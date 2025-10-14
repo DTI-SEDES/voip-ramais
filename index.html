@@ -28,6 +28,7 @@
             overflow: hidden;
         }
 
+        /* Cabeçalho */
         header {
             background: linear-gradient(135deg, #0056b3 0%, #003d82 100%);
             color: white;
@@ -64,7 +65,6 @@
             font-size: 11px;
             text-align: center;
             line-height: 1.2;
-            flex-shrink: 0;
         }
 
         .titulo h1 {
@@ -84,7 +84,6 @@
             padding: 10px 15px;
             border-radius: 8px;
             text-align: right;
-            flex-shrink: 0;
         }
 
         .total-ramais {
@@ -92,6 +91,7 @@
             font-weight: 600;
         }
 
+        /* Filtros */
         .filters-section {
             padding: 0;
             background: #f8f9fa;
@@ -107,11 +107,6 @@
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .filters-header::before {
-            content: '🔍';
-            font-size: 1.2em;
         }
 
         .filters-grid {
@@ -149,12 +144,6 @@
             outline: none;
             border-color: #0056b3;
             box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
-            transform: translateY(-1px);
-        }
-
-        input::placeholder {
-            color: #6c757d;
-            font-weight: 400;
         }
 
         .clear-btn {
@@ -171,9 +160,9 @@
 
         .clear-btn:hover {
             background: linear-gradient(135deg, #c82333, #a71e2a);
-            transform: translateY(-1px);
         }
 
+        /* Resultados */
         .results-info {
             padding: 12px 25px;
             background: #e7f3ff;
@@ -185,15 +174,7 @@
             align-items: center;
         }
 
-        .results-count {
-            font-size: 0.95em;
-        }
-
-        .sort-info {
-            font-size: 0.85em;
-            opacity: 0.8;
-        }
-
+        /* Tabela */
         .table-container {
             overflow-x: auto;
             max-height: 60vh;
@@ -216,7 +197,6 @@
             user-select: none;
             position: sticky;
             top: 0;
-            z-index: 10;
             border-right: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -233,7 +213,6 @@
             position: absolute;
             right: 15px;
             opacity: 0.7;
-            font-size: 0.9em;
         }
 
         th.asc::after {
@@ -249,8 +228,6 @@
         td {
             padding: 14px 20px;
             border-bottom: 1px solid #f8f9fa;
-            color: #2c3e50;
-            font-weight: 500;
         }
 
         .ramal-cell {
@@ -262,7 +239,6 @@
         .sigla-cell {
             font-weight: 600;
             color: #2c3e50;
-            background: #f8f9fa;
         }
 
         .departamento-cell {
@@ -275,11 +251,10 @@
         }
 
         tr:hover {
-            background: linear-gradient(135deg, #e7f3ff, #d4e7ff);
-            transform: translateY(-1px);
-            transition: all 0.2s ease;
+            background: #e7f3ff;
         }
 
+        /* Sem resultados */
         .no-results {
             text-align: center;
             padding: 60px 20px;
@@ -287,29 +262,17 @@
             background: #f8f9fa;
         }
 
-        .no-results p {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #0056b3;
-            font-weight: 600;
-        }
-
         .reset-btn {
-            background: linear-gradient(135deg, #0056b3, #004494);
+            background: #0056b3;
             color: white;
             border: none;
             padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
-        .reset-btn:hover {
-            background: linear-gradient(135deg, #004494, #003d82);
-            transform: translateY(-1px);
-        }
-
+        /* Rodapé */
         footer {
             background: #003d82;
             color: white;
@@ -318,91 +281,19 @@
             border-top: 4px solid #ffd700;
         }
 
-        footer p {
-            margin: 0;
-            opacity: 0.9;
-            font-size: 0.95em;
-        }
-
-        @media (max-width: 1024px) {
-            .filters-grid {
-                grid-template-columns: 100px 1fr 1fr 90px;
-                gap: 12px;
-                padding: 20px;
-            }
-            
-            .brasao {
-                width: 60px;
-                height: 60px;
-                font-size: 10px;
-            }
-            
-            .titulo h1 {
-                font-size: 1.7em;
-            }
-        }
-
+        /* Responsivo */
         @media (max-width: 768px) {
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
             .header-content {
                 flex-direction: column;
                 text-align: center;
-                gap: 15px;
             }
             
             .brasao-titulo {
                 flex-direction: column;
-                text-align: center;
-            }
-            
-            .info-geral {
-                text-align: center;
-            }
-            
-            .filters-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-            
-            .clear-btn {
-                width: 100%;
-            }
-            
-            th, td {
-                padding: 12px 15px;
-                font-size: 14px;
-            }
-            
-            .titulo h1 {
-                font-size: 1.5em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                border-radius: 10px;
-            }
-            
-            header {
-                padding: 20px;
-            }
-            
-            .filters-grid {
-                padding: 15px;
-            }
-            
-            th, td {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-            
-            .brasao {
-                width: 50px;
-                height: 50px;
-                font-size: 9px;
             }
         }
     </style>
@@ -417,7 +308,7 @@
                     </div>
                     <div class="titulo">
                         <h1>Ramais VoIP - SEDES</h1>
-                        <p>Sistema Oficial de Consulta de Ramais</p>
+                        <p>Sistema Oficial de Consulta</p>
                     </div>
                 </div>
                 <div class="info-geral">
@@ -428,22 +319,22 @@
         
         <div class="filters-section">
             <div class="filters-header">
-                Pesquisa de Ramais
+                🔍 Pesquisa de Ramais
             </div>
             <div class="filters-grid">
-                <div class="filter-group compact">
+                <div class="filter-group">
                     <label for="search-ramal">RAMAL</label>
                     <input type="text" id="search-ramal" placeholder="Número do ramal">
                 </div>
                 
-                <div class="filter-group large">
+                <div class="filter-group">
                     <label for="search-sigla">SIGLA/LOCAL</label>
-                    <input type="text" id="search-sigla" placeholder="Sigla ou nome do local">
+                    <input type="text" id="search-sigla" placeholder="Sigla ou local">
                 </div>
                 
-                <div class="filter-group large">
-                    <label for="search-departamento">DEPARTAMENTO/DIVISÃO</label>
-                    <input type="text" id="search-departamento" placeholder="Departamento ou divisão">
+                <div class="filter-group">
+                    <label for="search-departamento">DEPARTAMENTO</label>
+                    <input type="text" id="search-departamento" placeholder="Departamento/divisão">
                 </div>
                 
                 <button id="clear-filters" class="clear-btn">Limpar</button>
@@ -469,23 +360,23 @@
                     </tr>
                 </thead>
                 <tbody id="table-body">
-                    <!-- Os dados serão inseridos aqui via JavaScript -->
+                    <!-- Dados carregados via JavaScript -->
                 </tbody>
             </table>
         </div>
         
         <div id="no-results" class="no-results" style="display: none;">
-            <p>Nenhum ramal encontrado com os critérios de pesquisa</p>
+            <p>Nenhum ramal encontrado</p>
             <button id="reset-search" class="reset-btn">Limpar pesquisa</button>
         </div>
         
         <footer>
-            <p>&copy; 2024 Governo do Estado do Rio Grande do Sul - Secretaria de Desenvolvimento Social</p>
+            <p>&copy; 2024 Governo do Estado do Rio Grande do Sul - SEDES</p>
         </footer>
     </div>
 
     <script>
-        // Dados atualizados conforme nova planilha
+        // DADOS COMPLETOS DOS RAMAIS - Baseado na planilha
         const ramaisData = [
             { ramal: '6555', sigla: 'UEAPI', departamento: 'Unidade Especial de Atenção ao Idoso' },
             { ramal: '6404', sigla: 'SEC ADJ', departamento: 'Gabinete Secretário Adjunto' },
@@ -627,22 +518,26 @@
             { ramal: '6415', sigla: 'ASSCOM', departamento: 'Assessoria de Comunicação SEDES' }
         ];
 
-        // Sistema de filtros
+        // SISTEMA DE FILTROS
         let filteredData = [...ramaisData];
         let sortColumn = 'ramal';
         let sortDirection = 'asc';
 
+        // Inicializar tabela
         function initTable() {
             updateTable();
             document.getElementById('total-count').textContent = ramaisData.length;
             
+            // Event listeners para filtros
             document.getElementById('search-ramal').addEventListener('input', filterTable);
             document.getElementById('search-sigla').addEventListener('input', filterTable);
             document.getElementById('search-departamento').addEventListener('input', filterTable);
             
+            // Botões
             document.getElementById('clear-filters').addEventListener('click', clearFilters);
             document.getElementById('reset-search').addEventListener('click', clearFilters);
             
+            // Ordenação
             document.querySelectorAll('th[data-sort]').forEach(th => {
                 th.addEventListener('click', () => {
                     const column = th.getAttribute('data-sort');
@@ -653,6 +548,7 @@
                         sortDirection = 'asc';
                     }
                     
+                    // Atualizar indicadores visuais
                     document.querySelectorAll('th').forEach(header => {
                         header.classList.remove('asc', 'desc');
                     });
@@ -664,6 +560,7 @@
             });
         }
 
+        // Filtrar tabela
         function filterTable() {
             const ramalFilter = document.getElementById('search-ramal').value.toLowerCase();
             const siglaFilter = document.getElementById('search-sigla').value.toLowerCase();
@@ -678,4 +575,66 @@
             });
             
             sortTable();
-            update
+            updateTable();
+        }
+
+        // Limpar filtros
+        function clearFilters() {
+            document.getElementById('search-ramal').value = '';
+            document.getElementById('search-sigla').value = '';
+            document.getElementById('search-departamento').value = '';
+            
+            filteredData = [...ramaisData];
+            sortTable();
+            updateTable();
+        }
+
+        // Ordenar tabela
+        function sortTable() {
+            filteredData.sort((a, b) => {
+                let aValue = a[sortColumn];
+                let bValue = b[sortColumn];
+                
+                if (sortColumn === 'ramal') {
+                    aValue = parseInt(aValue);
+                    bValue = parseInt(bValue);
+                }
+                
+                if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+                if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
+        // Atualizar tabela
+        function updateTable() {
+            const tableBody = document.getElementById('table-body');
+            const noResults = document.getElementById('no-results');
+            const resultsCount = document.getElementById('results-count');
+            
+            tableBody.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                noResults.style.display = 'block';
+                resultsCount.textContent = '0';
+            } else {
+                noResults.style.display = 'none';
+                resultsCount.textContent = filteredData.length;
+                
+                filteredData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="ramal-cell">${item.ramal}</td>
+                        <td class="sigla-cell">${item.sigla}</td>
+                        <td class="departamento-cell">${item.departamento}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Inicializar quando a página carregar
+        document.addEventListener('DOMContentLoaded', initTable);
+    </script>
+</body>
+</html>
