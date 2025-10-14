@@ -91,6 +91,43 @@
             font-weight: 600;
         }
 
+        /* Grupos de Departamentos */
+        .department-groups {
+            background: #e7f3ff;
+            padding: 20px 25px;
+            border-bottom: 2px solid #cce0ff;
+        }
+
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: end;
+        }
+
+        .group-filter {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-filter label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #0056b3;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .group-filter select {
+            padding: 12px 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
         /* Filtros */
         .filters-section {
             padding: 0;
@@ -283,7 +320,7 @@
 
         /* Responsivo */
         @media (max-width: 768px) {
-            .filters-grid {
+            .filters-grid, .groups-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -317,9 +354,55 @@
             </div>
         </header>
         
+        <!-- NOVO: Grupos de Departamentos -->
+        <div class="department-groups">
+            <div class="groups-grid">
+                <div class="group-filter">
+                    <label for="department-category">CATEGORIA</label>
+                    <select id="department-category">
+                        <option value="">Todas as categorias</option>
+                        <option value="GABINETE">Gabinete e Secretaria</option>
+                        <option value="DEPARTAMENTO">Departamentos</option>
+                        <option value="DIVISAO">Divisões</option>
+                        <option value="CONSELHO">Conselhos</option>
+                        <option value="ASSESSORIA">Assessorias</option>
+                        <option value="ADMINISTRATIVO">Administrativo</option>
+                    </select>
+                </div>
+                
+                <div class="group-filter">
+                    <label for="department-area">ÁREA ESPECÍFICA</label>
+                    <select id="department-area">
+                        <option value="">Todas as áreas</option>
+                        <option value="GABINETE">Gabinete</option>
+                        <option value="DSA">Segurança Alimentar</option>
+                        <option value="DPJ">Juventude</option>
+                        <option value="DIPPE">DIPPE</option>
+                        <option value="DGS">Gestão Social</option>
+                        <option value="DAS">Desenvolvimento Social</option>
+                        <option value="DA">Administrativo</option>
+                        <option value="CONSELHO">Conselhos</option>
+                    </select>
+                </div>
+                
+                <div class="group-filter">
+                    <label for="department-type">TIPO DE SETOR</label>
+                    <select id="department-type">
+                        <option value="">Todos os tipos</option>
+                        <option value="SECRETARIA">Secretaria</option>
+                        <option value="DEPARTAMENTO">Departamento</option>
+                        <option value="DIVISAO">Divisão</option>
+                        <option value="ASSESSORIA">Assessoria</option>
+                        <option value="CONSELHO">Conselho</option>
+                        <option value="GERAL">Direção Geral</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
         <div class="filters-section">
             <div class="filters-header">
-                🔍 Pesquisa de Ramais
+                🔍 Pesquisa Avançada
             </div>
             <div class="filters-grid">
                 <div class="filter-group">
@@ -376,7 +459,7 @@
     </div>
 
     <script>
-        // DADOS COMPLETOS DOS RAMAIS - Baseado na planilha
+        // DADOS COMPLETOS DOS RAMAIS
         const ramaisData = [
             { ramal: '6555', sigla: 'UEAPI', departamento: 'Unidade Especial de Atenção ao Idoso' },
             { ramal: '6404', sigla: 'SEC ADJ', departamento: 'Gabinete Secretário Adjunto' },
@@ -519,23 +602,6 @@
         ];
 
         // SISTEMA DE FILTROS
-        <div class="department-groups">
-    <div class="filter-group">
-        <label for="department-group">GRUPO DE DEPARTAMENTOS</label>
-        <select id="department-group">
-            <option value="">Todos os departamentos</option>
-            <option value="GABINETE">Gabinete e Secretaria</option>
-            <option value="DSA">Segurança Alimentar (DSA)</option>
-            <option value="DPJ">Políticas para Juventude (DPJ)</option>
-            <option value="DIPPE">DIPPE e Divisões</option>
-            <option value="DGS">Gestão Social (DGS)</option>
-            <option value="DAS">Desenvolvimento Social (DAS)</option>
-            <option value="DA">Administrativo (DA)</option>
-            <option value="CONSELHO">Conselhos</option>
-            <option value="ASSESSORIA">Assessorias</option>
-        </select>
-    </div>
-</div>
         let filteredData = [...ramaisData];
         let sortColumn = 'ramal';
         let sortDirection = 'asc';
@@ -545,10 +611,13 @@
             updateTable();
             document.getElementById('total-count').textContent = ramaisData.length;
             
-            // Event listeners para filtros
+            // Event listeners para todos os filtros
             document.getElementById('search-ramal').addEventListener('input', filterTable);
             document.getElementById('search-sigla').addEventListener('input', filterTable);
             document.getElementById('search-departamento').addEventListener('input', filterTable);
+            document.getElementById('department-category').addEventListener('change', filterTable);
+            document.getElementById('department-area').addEventListener('change', filterTable);
+            document.getElementById('department-type').addEventListener('change', filterTable);
             
             // Botões
             document.getElementById('clear-filters').addEventListener('click', clearFilters);
@@ -565,7 +634,6 @@
                         sortDirection = 'asc';
                     }
                     
-                    // Atualizar indicadores visuais
                     document.querySelectorAll('th').forEach(header => {
                         header.classList.remove('asc', 'desc');
                     });
@@ -577,29 +645,72 @@
             });
         }
 
-        // Filtrar tabela
+        // Filtrar tabela com todos os critérios
         function filterTable() {
             const ramalFilter = document.getElementById('search-ramal').value.toLowerCase();
             const siglaFilter = document.getElementById('search-sigla').value.toLowerCase();
             const departamentoFilter = document.getElementById('search-departamento').value.toLowerCase();
+            const categoryFilter = document.getElementById('department-category').value;
+            const areaFilter = document.getElementById('department-area').value;
+            const typeFilter = document.getElementById('department-type').value;
             
             filteredData = ramaisData.filter(item => {
-                return (
+                // Filtros básicos
+                const basicMatch = (
                     item.ramal.toLowerCase().includes(ramalFilter) &&
                     item.sigla.toLowerCase().includes(siglaFilter) &&
                     item.departamento.toLowerCase().includes(departamentoFilter)
                 );
+                
+                if (!basicMatch) return false;
+                
+                // Filtros por categoria
+                if (categoryFilter) {
+                    if (categoryFilter === 'GABINETE' && !item.departamento.includes('Gabinete')) return false;
+                    if (categoryFilter === 'DEPARTAMENTO' && !item.departamento.includes('Departamento')) return false;
+                    if (categoryFilter === 'DIVISAO' && !item.departamento.includes('Divisão')) return false;
+                    if (categoryFilter === 'CONSELHO' && !item.departamento.includes('Conselho')) return false;
+                    if (categoryFilter === 'ASSESSORIA' && !item.departamento.includes('Assessoria')) return false;
+                    if (categoryFilter === 'ADMINISTRATIVO' && !item.departamento.includes('DA')) return false;
+                }
+                
+                // Filtros por área
+                if (areaFilter) {
+                    if (areaFilter === 'GABINETE' && !item.departamento.includes('Gabinete')) return false;
+                    if (areaFilter === 'DSA' && !item.sigla.includes('DSA')) return false;
+                    if (areaFilter === 'DPJ' && !item.sigla.includes('DPJ')) return false;
+                    if (areaFilter === 'DIPPE' && !item.sigla.includes('DIPPE')) return false;
+                    if (areaFilter === 'DGS' && !item.departamento.includes('DGS')) return false;
+                    if (areaFilter === 'DAS' && !item.departamento.includes('DAS')) return false;
+                    if (areaFilter === 'DA' && !item.departamento.includes('DA')) return false;
+                    if (areaFilter === 'CONSELHO' && !item.departamento.includes('Conselho')) return false;
+                }
+                
+                // Filtros por tipo
+                if (typeFilter) {
+                    if (typeFilter === 'SECRETARIA' && !item.departamento.includes('Secretário')) return false;
+                    if (typeFilter === 'DEPARTAMENTO' && !item.departamento.includes('Departamento')) return false;
+                    if (typeFilter === 'DIVISAO' && !item.departamento.includes('Divisão')) return false;
+                    if (typeFilter === 'ASSESSORIA' && !item.departamento.includes('Assessoria')) return false;
+                    if (typeFilter === 'CONSELHO' && !item.departamento.includes('Conselho')) return false;
+                    if (typeFilter === 'GERAL' && !item.departamento.includes('Direção Geral')) return false;
+                }
+                
+                return true;
             });
             
             sortTable();
             updateTable();
         }
 
-        // Limpar filtros
+        // Limpar todos os filtros
         function clearFilters() {
             document.getElementById('search-ramal').value = '';
             document.getElementById('search-sigla').value = '';
             document.getElementById('search-departamento').value = '';
+            document.getElementById('department-category').value = '';
+            document.getElementById('department-area').value = '';
+            document.getElementById('department-type').value = '';
             
             filteredData = [...ramaisData];
             sortTable();
