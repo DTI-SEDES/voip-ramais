@@ -289,6 +289,15 @@
             color: white;
         }
         
+        .debug-info {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
         @media (max-width: 768px) {
             .department-header {
                 flex-direction: column;
@@ -313,7 +322,7 @@
     <div class="container">
         <header>
             <h1>Lista de Ramais - SEDES</h1>
-            <p class="subtitle">Divisão de Tecnologia da Informação</p>
+            <p class="subtitle">Secretaria de Desenvolvimento Social</p>
             <button class="admin-login-btn" id="adminLoginBtn">Admin</button>
         </header>
         
@@ -329,11 +338,14 @@
         </div>
         
         <div class="content" id="content">
+            <div class="debug-info" id="debugInfo">
+                Carregando dados...
+            </div>
             <!-- Os dados serão inseridos aqui pelo JavaScript -->
         </div>
         
         <footer>
-            <p>Atualizado em 10/2025 | Secretaria de Desenvolvimento Social</p>
+            <p>Atualizado em 2023 | Secretaria de Desenvolvimento Social</p>
         </footer>
     </div>
 
@@ -389,7 +401,7 @@
     </div>
 
     <script>
-        // Dados completos dos ramais
+        // Dados completos dos ramais - VOU VERIFICAR SE ESTÃO TODOS
         let ramais = JSON.parse(localStorage.getItem('ramais_sedes')) || [
             {ramal: "6555", unidade: "Gabinete", departamento: "UEAPI - Unidade Especial de Atenção ao Idoso", setor: "Unidade Especial de Unidade Especial de Atenção ao Idoso"},
             {ramal: "6404", unidade: "Gabinete", departamento: "SECRETÁRIO ADJUNTO", setor: "Gabinete Secretário Adjunto"},
@@ -513,318 +525,3 @@
             {ramal: "6436", unidade: "Departamento", departamento: "Departamento Administrativo", setor: "Divisão de Gestão de Pessoas"},
             {ramal: "6485", unidade: "Departamento", departamento: "Departamento Administrativo", setor: "Direção Administrativa"},
             {ramal: "6486", unidade: "Departamento", departamento: "Departamento Administrativo", setor: "Direção Administrativa"},
-            {ramal: "8418", unidade: "Gabinete", departamento: "COPA Gabinete", setor: "Copa 8º Andar"},
-            {ramal: "6449", unidade: "Conselho", departamento: "CEI", setor: "Conselho do Idoso"},
-            {ramal: "6450", unidade: "Conselho", departamento: "CEI", setor: "Conselho do Idoso"},
-            {ramal: "6560", unidade: "Conselho", departamento: "CEI", setor: "Conselho do Idoso"},
-            {ramal: "6427", unidade: "Conselho", departamento: "CEAS", setor: "Conselho de Assistência Social"},
-            {ramal: "6495", unidade: "Conselho", departamento: "CEAS", setor: "Conselho de Assistência Social"},
-            {ramal: "6522", unidade: "Conselho", departamento: "CEAS", setor: "Conselho de Assistência Social"},
-            {ramal: "6536", unidade: "Conselho", departamento: "CEAS", setor: "Conselho de Assistência Social"},
-            {ramal: "6416", unidade: "Assessoria", departamento: "Assessoria Técnica", setor: "Assessoria Técnica"},
-            {ramal: "6493", unidade: "Assessoria", departamento: "Assessoria Técnica", setor: "Assessoria Técnica"},
-            {ramal: "6528", unidade: "Assessoria", departamento: "Assessoria Técnica", setor: "Assessoria Técnica"},
-            {ramal: "6543", unidade: "Assessoria", departamento: "Assessoria Técnica", setor: "Assessoria Técnica"},
-            {ramal: "6421", unidade: "Assessoria", departamento: "Serotial Procuradoria Jutidica SEDES", setor: "Setorial PGE"},
-            {ramal: "6422", unidade: "Assessoria", departamento: "Serotial Procuradoria Jutidica SEDES", setor: "Setorial PGE"},
-            {ramal: "6477", unidade: "Assessoria", departamento: "Serotial Procuradoria Jutidica SEDES", setor: "Setorial PGE"},
-            {ramal: "6415", unidade: "Assessoria", departamento: "Assessoria de Comunicação Social", setor: "Assessoria de Comunicação Social"}
-        ];
-
-        // Credenciais de administrador (em um sistema real, isso seria no backend)
-        const ADMIN_CREDENTIALS = {
-            username: "admin",
-            password: "sedes2023"
-        };
-
-        // Estado da aplicação
-        let isAdmin = false;
-        let currentEditIndex = -1; // -1 significa que é uma adição, não edição
-
-        // Agrupar ramais por departamento
-        function groupByDepartment(ramais) {
-            const grouped = {};
-            ramais.forEach(ramal => {
-                if (!grouped[ramal.departamento]) {
-                    grouped[ramal.departamento] = [];
-                }
-                grouped[ramal.departamento].push(ramal);
-            });
-            return grouped;
-        }
-
-        // Renderizar os dados na página
-        function renderRamais(filteredRamais = ramais) {
-            const content = document.getElementById('content');
-            content.innerHTML = '';
-            
-            const grouped = groupByDepartment(filteredRamais);
-            
-            Object.keys(grouped).forEach(departamento => {
-                const ramaisDoDepartamento = grouped[departamento];
-                const unidade = ramaisDoDepartamento[0].unidade;
-                
-                const departmentDiv = document.createElement('div');
-                departmentDiv.className = 'department';
-                departmentDiv.setAttribute('data-unidade', unidade);
-                
-                const departmentHeader = document.createElement('div');
-                departmentHeader.className = 'department-header';
-                departmentHeader.innerHTML = `
-                    <h2>${departamento}</h2>
-                    <span class="toggle-icon">▼</span>
-                `;
-                
-                const departmentContent = document.createElement('div');
-                departmentContent.className = 'department-content';
-                
-                let tableHTML = `
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ramal</th>
-                                <th>Setor</th>
-                                ${isAdmin ? '<th>Ações</th>' : ''}
-                            </tr>
-                        </thead>
-                        <tbody>
-                `;
-                
-                ramaisDoDepartamento.forEach((ramal, index) => {
-                    const originalIndex = ramais.findIndex(r => 
-                        r.ramal === ramal.ramal && 
-                        r.departamento === ramal.departamento && 
-                        r.setor === ramal.setor
-                    );
-                    
-                    tableHTML += `
-                        <tr>
-                            <td class="ramal">${ramal.ramal}</td>
-                            <td>${ramal.setor}</td>
-                            ${isAdmin ? `
-                                <td>
-                                    <button class="edit-btn" data-index="${originalIndex}">Editar</button>
-                                    <button class="delete-btn" data-index="${originalIndex}">Excluir</button>
-                                </td>
-                            ` : ''}
-                        </tr>
-                    `;
-                });
-                
-                tableHTML += `
-                        </tbody>
-                    </table>
-                `;
-                
-                departmentContent.innerHTML = tableHTML;
-                
-                departmentDiv.appendChild(departmentHeader);
-                departmentDiv.appendChild(departmentContent);
-                content.appendChild(departmentDiv);
-                
-                // Adicionar evento de clique para expandir/recolher
-                departmentHeader.addEventListener('click', () => {
-                    departmentContent.classList.toggle('show');
-                    const icon = departmentHeader.querySelector('.toggle-icon');
-                    icon.textContent = departmentContent.classList.contains('show') ? '▲' : '▼';
-                });
-            });
-            
-            // Adicionar botão de adicionar se for admin
-            if (isAdmin) {
-                const addButton = document.createElement('button');
-                addButton.className = 'add-ramal-btn';
-                addButton.textContent = '+ Adicionar Novo Ramal';
-                addButton.addEventListener('click', () => {
-                    openEditModal();
-                });
-                content.insertBefore(addButton, content.firstChild);
-            }
-            
-            // Adicionar eventos aos botões de edição e exclusão
-            if (isAdmin) {
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        openEditModal(index);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        if (confirm('Tem certeza que deseja excluir este ramal?')) {
-                            ramais.splice(index, 1);
-                            saveRamais();
-                            renderRamais();
-                        }
-                    });
-                });
-            }
-        }
-
-        // Salvar ramais no localStorage
-        function saveRamais() {
-            localStorage.setItem('ramais_sedes', JSON.stringify(ramais));
-        }
-
-        // Filtrar ramais por unidade
-        function filterByUnidade(unidade) {
-            if (unidade === 'all') {
-                return ramais;
-            }
-            return ramais.filter(ramal => ramal.unidade === unidade);
-        }
-
-        // Filtrar ramais por busca
-        function filterBySearch(term) {
-            if (!term) {
-                return ramais;
-            }
-            const lowerTerm = term.toLowerCase();
-            return ramais.filter(ramal => 
-                ramal.ramal.toLowerCase().includes(lowerTerm) ||
-                ramal.departamento.toLowerCase().includes(lowerTerm) ||
-                ramal.setor.toLowerCase().includes(lowerTerm)
-            );
-        }
-
-        // Abrir modal de edição
-        function openEditModal(index = -1) {
-            currentEditIndex = index;
-            const modal = document.getElementById('editModal');
-            const title = document.getElementById('editModalTitle');
-            
-            if (index === -1) {
-                // Modo adição
-                title.textContent = 'Adicionar Novo Ramal';
-                document.getElementById('editRamal').value = '';
-                document.getElementById('editUnidade').value = 'Gabinete';
-                document.getElementById('editDepartamento').value = '';
-                document.getElementById('editSetor').value = '';
-            } else {
-                // Modo edição
-                title.textContent = 'Editar Ramal';
-                const ramal = ramais[index];
-                document.getElementById('editRamal').value = ramal.ramal;
-                document.getElementById('editUnidade').value = ramal.unidade;
-                document.getElementById('editDepartamento').value = ramal.departamento;
-                document.getElementById('editSetor').value = ramal.setor;
-            }
-            
-            modal.style.display = 'flex';
-        }
-
-        // Fechar modal de edição
-        function closeEditModal() {
-            document.getElementById('editModal').style.display = 'none';
-        }
-
-        // Salvar edição
-        function saveEdit() {
-            const ramal = document.getElementById('editRamal').value;
-            const unidade = document.getElementById('editUnidade').value;
-            const departamento = document.getElementById('editDepartamento').value;
-            const setor = document.getElementById('editSetor').value;
-            
-            if (!ramal || !unidade || !departamento || !setor) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            const ramalData = { ramal, unidade, departamento, setor };
-            
-            if (currentEditIndex === -1) {
-                // Adicionar novo
-                ramais.push(ramalData);
-            } else {
-                // Editar existente
-                ramais[currentEditIndex] = ramalData;
-            }
-            
-            saveRamais();
-            renderRamais();
-            closeEditModal();
-        }
-
-        // Inicializar a página
-        document.addEventListener('DOMContentLoaded', () => {
-            renderRamais();
-            
-            // Configurar busca
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', () => {
-                const filteredBySearch = filterBySearch(searchInput.value);
-                renderRamais(filteredBySearch);
-            });
-            
-            // Configurar filtros por unidade
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    
-                    const filter = button.getAttribute('data-filter');
-                    const filteredRamais = filterByUnidade(filter);
-                    renderRamais(filteredRamais);
-                });
-            });
-            
-            // Configurar modal de login
-            const loginModal = document.getElementById('loginModal');
-            const adminLoginBtn = document.getElementById('adminLoginBtn');
-            const cancelLogin = document.getElementById('cancelLogin');
-            const confirmLogin = document.getElementById('confirmLogin');
-            
-            adminLoginBtn.addEventListener('click', () => {
-                if (isAdmin) {
-                    // Logout
-                    isAdmin = false;
-                    adminLoginBtn.textContent = 'Admin';
-                    renderRamais();
-                } else {
-                    // Login
-                    loginModal.style.display = 'flex';
-                }
-            });
-            
-            cancelLogin.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-            });
-            
-            confirmLogin.addEventListener('click', () => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                    isAdmin = true;
-                    adminLoginBtn.textContent = 'Sair';
-                    loginModal.style.display = 'none';
-                    renderRamais();
-                } else {
-                    alert('Credenciais inválidas!');
-                }
-            });
-            
-            // Configurar modal de edição
-            const editModal = document.getElementById('editModal');
-            const cancelEdit = document.getElementById('cancelEdit');
-            const confirmEdit = document.getElementById('confirmEdit');
-            
-            cancelEdit.addEventListener('click', closeEditModal);
-            confirmEdit.addEventListener('click', saveEdit);
-            
-            // Fechar modais ao clicar fora
-            window.addEventListener('click', (e) => {
-                if (e.target === loginModal) {
-                    loginModal.style.display = 'none';
-                }
-                if (e.target === editModal) {
-                    closeEditModal();
-                }
-            });
-        });
-    </script>
-</body>
-</html>
