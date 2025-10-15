@@ -33,24 +33,6 @@
             color: white;
             padding: 30px;
             text-align: center;
-            position: relative;
-        }
-        
-        .admin-login-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .admin-login-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
         }
         
         h1 {
@@ -178,37 +160,6 @@
             width: 100px;
         }
         
-        .edit-btn {
-            background: #28a745;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-        
-        .delete-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-left: 5px;
-        }
-        
-        .add-ramal-btn {
-            background: #17a2b8;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px 0;
-        }
-        
         footer {
             text-align: center;
             padding: 20px;
@@ -216,86 +167,6 @@
             font-size: 0.9rem;
             border-top: 1px solid #e1e5eb;
             margin-top: 30px;
-        }
-        
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .modal h2 {
-            margin-bottom: 20px;
-            color: #2c3e50;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d1d9e6;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-        
-        .modal-buttons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background: #1e5799;
-            color: white;
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .debug-info {
-            background: #f8f9fa;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            color: #666;
         }
         
         @media (max-width: 768px) {
@@ -323,7 +194,6 @@
         <header>
             <h1>Lista de Ramais - SEDES</h1>
             <p class="subtitle">Secretaria de Desenvolvimento Social</p>
-            <button class="admin-login-btn" id="adminLoginBtn">Admin</button>
         </header>
         
         <div class="search-container">
@@ -338,9 +208,7 @@
         </div>
         
         <div class="content" id="content">
-            <div class="debug-info" id="debugInfo">
-                Carregando dados...
-            </div>
+            <!-- Os dados serão inseridos aqui pelo JavaScript -->
         </div>
         
         <footer>
@@ -348,60 +216,9 @@
         </footer>
     </div>
 
-    <!-- Modal de Login -->
-    <div class="modal" id="loginModal">
-        <div class="modal-content">
-            <h2>Login Administrativo</h2>
-            <div class="form-group">
-                <label for="username">Usuário:</label>
-                <input type="text" id="username" placeholder="Digite o usuário">
-            </div>
-            <div class="form-group">
-                <label for="password">Senha:</label>
-                <input type="password" id="password" placeholder="Digite a senha">
-            </div>
-            <div class="modal-buttons">
-                <button class="btn btn-secondary" id="cancelLogin">Cancelar</button>
-                <button class="btn btn-primary" id="confirmLogin">Entrar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Edição/Adição -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <h2 id="editModalTitle">Editar Ramal</h2>
-            <div class="form-group">
-                <label for="editRamal">Ramal:</label>
-                <input type="text" id="editRamal" placeholder="Número do ramal">
-            </div>
-            <div class="form-group">
-                <label for="editUnidade">Unidade:</label>
-                <select id="editUnidade">
-                    <option value="Gabinete">Gabinete</option>
-                    <option value="Departamento">Departamento</option>
-                    <option value="Conselho">Conselho</option>
-                    <option value="Assessoria">Assessoria</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="editDepartamento">Departamento:</label>
-                <input type="text" id="editDepartamento" placeholder="Nome do departamento">
-            </div>
-            <div class="form-group">
-                <label for="editSetor">Setor/Divisão:</label>
-                <input type="text" id="editSetor" placeholder="Nome do setor ou divisão">
-            </div>
-            <div class="modal-buttons">
-                <button class="btn btn-secondary" id="cancelEdit">Cancelar</button>
-                <button class="btn btn-primary" id="confirmEdit">Salvar</button>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Dados completos dos ramais - VERSÃO SIMPLIFICADA E CORRIGIDA
-        let ramais = [
+        // Dados dos ramais
+        const ramais = [
             {ramal: "6555", unidade: "Gabinete", departamento: "UEAPI - Unidade Especial de Atenção ao Idoso", setor: "Unidade Especial de Unidade Especial de Atenção ao Idoso"},
             {ramal: "6404", unidade: "Gabinete", departamento: "SECRETÁRIO ADJUNTO", setor: "Gabinete Secretário Adjunto"},
             {ramal: "6408", unidade: "Gabinete", departamento: "SECRETÁRIO ADJUNTO", setor: "Gabinete Secretário Adjunto"},
@@ -542,49 +359,26 @@
             {ramal: "6415", unidade: "Assessoria", departamento: "Assessoria de Comunicação Social", setor: "Assessoria de Comunicação Social"}
         ];
 
-        // Credenciais de administrador
-        const ADMIN_CREDENTIALS = {
-            username: "admin",
-            password: "sedes2023"
-        };
-
-        // Estado da aplicação
-        let isAdmin = false;
-        let currentEditIndex = -1;
-
-        // Agrupar ramais por departamento - CORRIGIDO
+        // Agrupar ramais por departamento
         function groupByDepartment(ramais) {
             const grouped = {};
             ramais.forEach(ramal => {
-                const dept = ramal.departamento;
-                if (!grouped[dept]) {
-                    grouped[dept] = [];
+                if (!grouped[ramal.departamento]) {
+                    grouped[ramal.departamento] = [];
                 }
-                grouped[dept].push(ramal);
+                grouped[ramal.departamento].push(ramal);
             });
             return grouped;
         }
 
-        // Renderizar os dados na página - CORRIGIDO
+        // Renderizar os dados na página
         function renderRamais(filteredRamais = ramais) {
             const content = document.getElementById('content');
-            const debugInfo = document.getElementById('debugInfo');
-            
-            // Debug info
-            debugInfo.innerHTML = `Total de ramais carregados: ${ramais.length} | Exibindo: ${filteredRamais.length}`;
-            
             content.innerHTML = '';
-            content.appendChild(debugInfo);
-            
-            if (filteredRamais.length === 0) {
-                content.innerHTML += '<p>Nenhum ramal encontrado.</p>';
-                return;
-            }
             
             const grouped = groupByDepartment(filteredRamais);
-            const departments = Object.keys(grouped).sort();
             
-            departments.forEach(departamento => {
+            Object.keys(grouped).forEach(departamento => {
                 const ramaisDoDepartamento = grouped[departamento];
                 const unidade = ramaisDoDepartamento[0].unidade;
                 
@@ -600,7 +394,7 @@
                 `;
                 
                 const departmentContent = document.createElement('div');
-                departmentContent.className = 'department-content show';
+                departmentContent.className = 'department-content';
                 
                 let tableHTML = `
                     <table>
@@ -608,29 +402,16 @@
                             <tr>
                                 <th>Ramal</th>
                                 <th>Setor</th>
-                                ${isAdmin ? '<th>Ações</th>' : ''}
                             </tr>
                         </thead>
                         <tbody>
                 `;
                 
-                ramaisDoDepartamento.forEach((ramal) => {
-                    const originalIndex = ramais.findIndex(r => 
-                        r.ramal === ramal.ramal && 
-                        r.departamento === ramal.departamento && 
-                        r.setor === ramal.setor
-                    );
-                    
+                ramaisDoDepartamento.forEach(ramal => {
                     tableHTML += `
                         <tr>
                             <td class="ramal">${ramal.ramal}</td>
                             <td>${ramal.setor}</td>
-                            ${isAdmin ? `
-                                <td>
-                                    <button class="edit-btn" data-index="${originalIndex}">Editar</button>
-                                    <button class="delete-btn" data-index="${originalIndex}">Excluir</button>
-                                </td>
-                            ` : ''}
                         </tr>
                     `;
                 });
@@ -653,43 +434,6 @@
                     icon.textContent = departmentContent.classList.contains('show') ? '▲' : '▼';
                 });
             });
-            
-            // Adicionar botão de adicionar se for admin
-            if (isAdmin) {
-                const addButton = document.createElement('button');
-                addButton.className = 'add-ramal-btn';
-                addButton.textContent = '+ Adicionar Novo Ramal';
-                addButton.addEventListener('click', () => {
-                    openEditModal();
-                });
-                content.insertBefore(addButton, content.firstChild);
-            }
-            
-            // Adicionar eventos aos botões de edição e exclusão
-            if (isAdmin) {
-                document.querySelectorAll('.edit-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        openEditModal(index);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = parseInt(e.target.getAttribute('data-index'));
-                        if (confirm('Tem certeza que deseja excluir este ramal?')) {
-                            ramais.splice(index, 1);
-                            saveRamais();
-                            renderRamais();
-                        }
-                    });
-                });
-            }
-        }
-
-        // Salvar ramais no localStorage
-        function saveRamais() {
-            localStorage.setItem('ramais_sedes', JSON.stringify(ramais));
         }
 
         // Filtrar ramais por unidade
@@ -713,67 +457,8 @@
             );
         }
 
-        // Abrir modal de edição
-        function openEditModal(index = -1) {
-            currentEditIndex = index;
-            const modal = document.getElementById('editModal');
-            const title = document.getElementById('editModalTitle');
-            
-            if (index === -1) {
-                // Modo adição
-                title.textContent = 'Adicionar Novo Ramal';
-                document.getElementById('editRamal').value = '';
-                document.getElementById('editUnidade').value = 'Gabinete';
-                document.getElementById('editDepartamento').value = '';
-                document.getElementById('editSetor').value = '';
-            } else {
-                // Modo edição
-                title.textContent = 'Editar Ramal';
-                const ramal = ramais[index];
-                document.getElementById('editRamal').value = ramal.ramal;
-                document.getElementById('editUnidade').value = ramal.unidade;
-                document.getElementById('editDepartamento').value = ramal.departamento;
-                document.getElementById('editSetor').value = ramal.setor;
-            }
-            
-            modal.style.display = 'flex';
-        }
-
-        // Fechar modal de edição
-        function closeEditModal() {
-            document.getElementById('editModal').style.display = 'none';
-        }
-
-        // Salvar edição
-        function saveEdit() {
-            const ramal = document.getElementById('editRamal').value;
-            const unidade = document.getElementById('editUnidade').value;
-            const departamento = document.getElementById('editDepartamento').value;
-            const setor = document.getElementById('editSetor').value;
-            
-            if (!ramal || !unidade || !departamento || !setor) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            const ramalData = { ramal, unidade, departamento, setor };
-            
-            if (currentEditIndex === -1) {
-                // Adicionar novo
-                ramais.push(ramalData);
-            } else {
-                // Editar existente
-                ramais[currentEditIndex] = ramalData;
-            }
-            
-            saveRamais();
-            renderRamais();
-            closeEditModal();
-        }
-
         // Inicializar a página
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Total de ramais carregados:', ramais.length);
             renderRamais();
             
             // Configurar busca
@@ -787,7 +472,9 @@
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
+                    // Remover classe active de todos os botões
                     filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Adicionar classe active ao botão clicado
                     button.classList.add('active');
                     
                     const filter = button.getAttribute('data-filter');
@@ -795,61 +482,9 @@
                     renderRamais(filteredRamais);
                 });
             });
-            
-            // Configurar modal de login
-            const loginModal = document.getElementById('loginModal');
-            const adminLoginBtn = document.getElementById('adminLoginBtn');
-            const cancelLogin = document.getElementById('cancelLogin');
-            const confirmLogin = document.getElementById('confirmLogin');
-            
-            adminLoginBtn.addEventListener('click', () => {
-                if (isAdmin) {
-                    // Logout
-                    isAdmin = false;
-                    adminLoginBtn.textContent = 'Admin';
-                    renderRamais();
-                } else {
-                    // Login
-                    loginModal.style.display = 'flex';
-                }
-            });
-            
-            cancelLogin.addEventListener('click', () => {
-                loginModal.style.display = 'none';
-            });
-            
-            confirmLogin.addEventListener('click', () => {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                    isAdmin = true;
-                    adminLoginBtn.textContent = 'Sair';
-                    loginModal.style.display = 'none';
-                    renderRamais();
-                } else {
-                    alert('Credenciais inválidas!');
-                }
-            });
-            
-            // Configurar modal de edição
-            const editModal = document.getElementById('editModal');
-            const cancelEdit = document.getElementById('cancelEdit');
-            const confirmEdit = document.getElementById('confirmEdit');
-            
-            cancelEdit.addEventListener('click', closeEditModal);
-            confirmEdit.addEventListener('click', saveEdit);
-            
-            // Fechar modais ao clicar fora
-            window.addEventListener('click', (e) => {
-                if (e.target === loginModal) {
-                    loginModal.style.display = 'none';
-                }
-                if (e.target === editModal) {
-                    closeEditModal();
-                }
-            });
         });
     </script>
 </body>
 </html>
+
+
